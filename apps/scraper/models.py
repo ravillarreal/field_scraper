@@ -13,7 +13,7 @@ class Element(models.Model):
 	"""Element model that contains html element information"""
 
 	text = models.CharField(max_length=255)
-	parent = models.ForeignKey("Element", on_delete=models.CASCADE)
+	parent = models.ForeignKey("Element", on_delete=models.CASCADE, null=True, blank=True)
 	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
 
