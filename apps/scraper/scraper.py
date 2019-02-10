@@ -12,12 +12,10 @@ def get_fields():
     for item in soup.find_all('input'):
         tag, created = Tag.objects.get_or_create(
             name=item.name,
-            defaults={"name": item.name}
         )
-        element, created = Element.objects.update_or_create(
+        element = Element.objects.create(
             text=item.text,
-            tag=tag,
-            parent=None
+            tag=tag
         )
         for key, value in item.attrs.items():
             att_obj, created = Attribute.objects.get_or_create(
@@ -26,5 +24,5 @@ def get_fields():
             Value.objects.update_or_create(
                 element=element,
                 attribute=att_obj,
-                value=value
+                defaults={"value": value}
             )

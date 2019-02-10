@@ -34,5 +34,8 @@ class Value(models.Model):
     """Model for storing element's attributes value"""
 
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, unique=True)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     value = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ('element', 'attribute')
