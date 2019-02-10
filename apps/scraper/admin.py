@@ -1,6 +1,7 @@
 from django.contrib import admin
 from apps.scraper.models import Element, Tag, Attribute, Value
 
+
 # Register your models here.
 class ValueInline(admin.StackedInline):
     model = Value
@@ -8,15 +9,19 @@ class ValueInline(admin.StackedInline):
 
 
 class ElementAdmin(admin.ModelAdmin):
-	inlines = (
-		ValueInline,
-	)
+    inlines = (
+        ValueInline,
+    )
+    list_display = ('pk', 'parent', 'tag')
+
 
 class AttributeAdmin(admin.ModelAdmin):
-	pass
+    list_display = ('pk', 'name')
+
 
 class TagAdmin(admin.ModelAdmin):
-	pass
+    pass
+
 
 admin.site.register(Element, ElementAdmin)
 admin.site.register(Attribute, AttributeAdmin)
