@@ -13,12 +13,25 @@ class Tag(models.Model):
         return self.name
 
 
+class Refer(models.Model):
+    """Intern purpose for merging similar fields"""
+
+    name = models.CharField(max_length=255)
+    help = models.CharField(max_length=255, null=True, blank=True)
+    label = models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower().replace(" ", "_")
+        super(Refer, self).save(*args, **kwargs)
+
+
 class Element(models.Model):
     """Element model that contains html element information"""
 
     text = models.CharField(max_length=255)
     parent = models.ForeignKey("Element", on_delete=models.CASCADE, null=True, blank=True)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    refers = models.ForeignKey(Refer, on_delete=models.CASCADE)
 
 
 class Attribute(models.Model):

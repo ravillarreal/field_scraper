@@ -4,12 +4,12 @@ from apps.scraper.models import Element, Tag, Value, Attribute
 
 
 def get_fields():
-    url = 'https://google.com'
-
-    response = requests.get(url)
+    url = 'http://www.chileautos.cl'
+    user_agent = {'User-agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'}
+    response = requests.get(url, headers=user_agent)
     soup = BeautifulSoup(response.content)
 
-    for item in soup.find_all('input'):
+    for item in soup.select('form input'):
         tag, created = Tag.objects.get_or_create(
             name=item.name,
         )
@@ -26,3 +26,5 @@ def get_fields():
                 attribute=att_obj,
                 defaults={"value": value}
             )
+    else:
+        return False
